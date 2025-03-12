@@ -1,7 +1,19 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
+
+const deleteFolder = (folderPath) => {
+    if (fs.existsSync(folderPath)) {
+        fs.rmSync(folderPath, { recursive: true, force: true });
+        console.log(`🗑️ Deleted folder: ${folderPath}`);
+    }
+};
+
+const authFolderPath = path.join(__dirname, '.wwebjs_auth');
+deleteFolder(authFolderPath);
 
 const client = new Client({
     authStrategy: new LocalAuth()
