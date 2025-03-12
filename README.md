@@ -20,7 +20,6 @@ A WhatsApp bot that uses the Gemini API to respond to your messages.
 
     ```bash
     npm install
-    npm install qrcode-terminal
     ```
 
 3.  **Set up the API key:**
@@ -34,7 +33,19 @@ A WhatsApp bot that uses the Gemini API to respond to your messages.
 
     * Make sure to replace `YOUR_KEY_HERE` with your actual API key.
 
-4.  **Start the bot:**
+4.  **Edit the context in `index.js`:**
+
+    * Open index.js and look for the following section:
+
+        ```js
+        const CONTEXT = `
+        You are an AI assistant specialized in...
+        `;
+        ```
+
+    * Customize the `CONTEXT` variable to define the scope and behavior of your bot's responses. This allows you to adjust how the bot interacts based on the context you provide.
+
+5.  **Start the bot:**
 
     ```bash
     npm start
@@ -43,6 +54,6 @@ A WhatsApp bot that uses the Gemini API to respond to your messages.
     * A QR code will appear in the terminal.
     * Scan the QR code with your WhatsApp app to connect the bot.
 
-5.  **You're all set!🎉**
+6.  **You're all set!🎉**
 
     * Send a message to your WhatsApp number, and the bot will respond using the Gemini API.
