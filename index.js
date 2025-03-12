@@ -10,9 +10,14 @@ const client = new Client({
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
+// 📌 Predefine a context to maintain focus
+const CONTEXT = `
+You are an AI assistant specialized in...
+`;
+
 client.on('qr', qr => {
     console.log('Scan this QR code with WhatsApp to connect the bot.');
-    qrcode.generate(qr, { small: true }); // Generates the QR code in the terminal
+    qrcode.generate(qr, { small: true });
 });
 
 client.on('ready', () => {
@@ -24,7 +29,6 @@ client.on('authenticated', () => {
 });
 
 client.on('message', async message => {
-    // Ignore old messages
     if (message.timestamp < Math.floor(Date.now() / 1000) - 10) return;
 
     console.log(`📩 New message received: ${message.body}`);
@@ -33,7 +37,7 @@ client.on('message', async message => {
         console.log('⏳ Querying Gemini...');
         
         const response = await axios.post(GEMINI_API_URL, {
-            contents: [{ parts: [{ text: message.body }] }]
+            contents: [{ parts: [{ text: `${CONTEXT}\n\nUser: ${message.body}` }] }]
         }, {
             headers: { 'Content-Type': 'application/json' }
         });
